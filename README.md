@@ -75,6 +75,32 @@ $coLeaders = $clan->memberList()->coLeaders(); // array of Player objects
 $elders = $clan->memberList()->elders(); // array of Player objects
 ```
 
+## Get warlog for sepcific clan, if it is public
+Refers to `/clans/{clanTag}/warlog` endpoint from the official docs.
+
+```
+$warlog = $client->getClanWarlog('#Y8P2UR98'); // returns an array of WarLog objects, if it is public.
+
+// last war
+$warlog[0]->result(); // win or lose
+$warlog[0]->endTime(); // 20161005T175318.000Z
+$warlog[0]->teamSize(); // 40
+
+$searchedClanStats = $warlog[0]->clan(); // WarClan object
+$searchedClanOpponentStats = $warlog[0]->opponent(); // WarOpponent object
+
+$searchedClanStats->attacks(); // 56
+$searchedClanStats->stars(); // 113
+$searchedClanStats->destructionPercentage(); // 98.54
+$searchedClanStats->expEarned(); // 210
+
+$searchedClanOpponentStats->name(); // Foo Bar
+$searchedClanOpponentStats->tag(); // #YH76RHE
+$searchedClanOpponentStats->clanLevel(); // 8
+$searchedClanOpponentStats->stars(); // 56
+$searchedClanOpponentStats->destructionPercentage(); // 98.54
+```
+
 ## Leagues
 Refers to `/leagues` endpoint from the official docs.
 ```php
@@ -114,4 +140,3 @@ $rankings[0]->name(); // Foobar
 $rankings[0]->trophies(); // 47846
 ```
 Instead of 'clans', as the second parameter you can also pass string `players` which will return array of Player objects.
-
