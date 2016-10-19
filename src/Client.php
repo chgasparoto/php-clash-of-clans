@@ -8,6 +8,7 @@ use ClashOfClans\Api\Clan\WarLog;
 use ClashOfClans\Api\League\League;
 use ClashOfClans\Api\Location\Location;
 use ClashOfClans\Api\Location\LocationList;
+use ClashOfClans\Api\Player\Player as Players;
 use ClashOfClans\Api\ResponseMediator;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface;
@@ -162,6 +163,18 @@ class Client
         return array_map(function ($item) {
             return WarLog::makeFromArray($item);
         }, $response['items']);
+    }
+
+    /**
+     * Get information about a single player by player tag.
+     *
+     * @param string $tag
+     * @return array
+     */
+    public function getPlayer($tag)
+    {
+        $response = $this->request('players/' . urlencode($tag));
+        return Players::makeFromArray($response);
     }
 
 }
